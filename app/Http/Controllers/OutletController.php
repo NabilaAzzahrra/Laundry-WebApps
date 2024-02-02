@@ -14,7 +14,9 @@ class OutletController extends Controller
      */
     public function index()
     {
+        $outlet = Outlet::all();
         return view('master.index')->with([
+            'outlet' => $outlet,
         ]);
     }
 

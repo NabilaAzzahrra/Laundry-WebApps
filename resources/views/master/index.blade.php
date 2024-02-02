@@ -300,35 +300,56 @@
             <div class="max-w-8xl w-1/2 mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="bg-gray-300">
-                        <h1 class="p-4 font-bold">TAMBAH DATA OUTLET</h1>
+                        <h1 class="p-4 font-bold">TAMBAH DATA PAKET</h1>
                     </div>
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <form action="{{ route('outlet.store') }}" method="post">
+                        <form action="{{ route('paket.store') }}" method="post">
                             @csrf
                             <label for="">
                                 <span
+                                    class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Outlet
+                                </span>
+                                <select class="js-example-basic-single js-states form-control  m-6 border"
+                                    style="width: 100%!important" name="id_outlet" data-placeholder="Pilih Outlet">
+                                    <option value="">Pilih...</option>
+                                    @foreach ($outlet as $o)
+                                        <option value="{{ $o->id }}">{{ $o->nama }}</option>
+                                    @endforeach
+                                </select><br>
+                                <span class="text-sm m-l text-red-500">{{ $errors->first('id_outlet') }}</span>
+                            </label><br>
+                            <label for="">
+                                <span
+                                    class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">
+                                    Jenis</span>
+                                <select class="js-example-basic-single js-states form-control  m-6 border"
+                                    style="width: 100%!important" name="jenis" data-placeholder="Pilih Jenis">
+                                    <option value="">Pilih...</option>
+                                    <option value="PAKAIAN">PAKAIAN</option>
+                                    <option value="HANDUK">HANDUK</option>
+                                    <option value="SPREI">SPREI</option>
+                                    <option value="BAJU HANGAT">BAJU HANGAT</option>
+                                    <option value="ALAT SHOLAT">ALAT SHOLAT</option>
+                                </select><br>
+                                <span class="text-sm m-l text-red-500">{{ $errors->first('jenis') }}</span>
+                            </label><br>
+                            <label for="">
+                                <span
                                     class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Nama
-                                    Outlet</span>
-                                <input type="text" name="nama" onkeyup="this.value = this.value.toUpperCase()"
+                                    Paket</span>
+                                <input type="text" name="nama_paket"
+                                    onkeyup="this.value = this.value.toUpperCase()"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    placeholder="Masukan Nama Lengkap..." required>
-                                <span class="text-sm m-l text-red-500">{{ $errors->first('nama') }}</span>
+                                    placeholder="Masukan Nama Paket..." required>
+                                <span class="text-sm m-l text-red-500">{{ $errors->first('nama_paket') }}</span>
                             </label><br>
                             <label for="">
                                 <span
-                                    class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Alamat</span>
-                                <input type="text" name="alamat" onkeyup="this.value = this.value.toUpperCase()"
+                                    class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Harga</span>
+                                <input type="number" name="harga" onkeyup="this.value = this.value.toUpperCase()"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    placeholder="Masukan Alamat..." required>
-                                <span class="text-sm m-l text-red-500">{{ $errors->first('alamat') }}</span>
-                            </label><br>
-                            <label for="">
-                                <span
-                                    class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Telepon</span>
-                                <input type="text" name="telp" onkeyup="this.value = this.value.toUpperCase()"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    placeholder="Masukan Telepon..." required>
-                                <span class="text-sm m-l text-red-500">{{ $errors->first('telp') }}</span>
+                                    placeholder="Masukan Harga..." required>
+                                <span class="text-sm m-l text-red-500">{{ $errors->first('harga') }}</span>
                             </label><br>
                             <div class="pt-2">
                                 <button type="submit"
@@ -350,13 +371,14 @@
             <div class="max-w-8xl w-1/2 mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <table class="table table-bordered" id="outlet-datatable">
+                        <table class="table table-bordered" id="paket-datatable">
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Nama</th>
-                                    <th>Alamat</th>
-                                    <th>Telepon</th>
+                                    <th>Outlet</th>
+                                    <th>Jenis</th>
+                                    <th>Paket</th>
+                                    <th>Harga</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -364,55 +386,76 @@
                     </div>
                 </div>
             </div>
-            <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal-outlet">
+            <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal-paket">
                 <div class="fixed inset-0 bg-black opacity-50"></div>
                 <div class="fixed inset-0 flex items-center justify-center">
                     <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
                         <div class="flex items-start justify-between p-4 border-b rounded-t">
-                            <h3 class="text-xl font-semibold text-gray-900" id="title_source_outlet">
+                            <h3 class="text-xl font-semibold text-gray-900" id="title_source_paket">
                                 fd
                             </h3>
-                            <button type="button" onclick="sourceModalCloseOutlet(this)"
-                                data-modal-target="sourceModal-outlet"
+                            <button type="button" onclick="sourceModalClosePaket(this)"
+                                data-modal-target="sourceModal-paket"
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
                                 data-modal-hide="defaultModal">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
                         </div>
-                        <form method="POST" action="{{ route('outlet.store') }}" id="formSourceModal-outlet">
+                        <form method="POST" action="{{ route('paket.store') }}" id="formSourceModal-paket">
                             @csrf
                             <div class="p-4 space-y-6">
                                 <label for="">
                                     <span
+                                        class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Outlet
+                                    </span>
+                                    <select class="js-example-basic-single js-states form-control  m-6 border"
+                                        style="width: 100%!important" name="id_outlet"
+                                        data-placeholder="Pilih Outlet" id="id_outlet">
+                                        <option value="">Pilih...</option>
+                                        @foreach ($outlet as $o)
+                                            <option value="{{ $o->id }}">{{ $o->nama }}</option>
+                                        @endforeach
+                                    </select><br>
+                                    <span class="text-sm m-l text-red-500">{{ $errors->first('id_outlet') }}</span>
+                                </label><br>
+                                <label for="">
+                                    <span
+                                        class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">
+                                        Jenis</span>
+                                    <select class="js-example-basic-single js-states form-control  m-6 border"
+                                        style="width: 100%!important" name="jenis" data-placeholder="Pilih Jenis"
+                                        id="jenis">
+                                        <option value="">Pilih...</option>
+                                        <option value="PAKAIAN">PAKAIAN</option>
+                                        <option value="HANDUK">HANDUK</option>
+                                        <option value="SPREI">SPREI</option>
+                                        <option value="BAJU HANGAT">BAJU HANGAT</option>
+                                        <option value="ALAT SHOLAT">ALAT SHOLAT</option>
+                                    </select><br>
+                                    <span class="text-sm m-l text-red-500">{{ $errors->first('jenis') }}</span>
+                                </label><br>
+                                <label for="">
+                                    <span
                                         class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Nama
-                                        Lengkap</span>
-                                    <input type="text" id="nama_outlet" name="nama"
+                                        Paket</span>
+                                    <input type="text" name="nama_paket" id="nama_paket"
                                         onkeyup="this.value = this.value.toUpperCase()"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        placeholder="Masukan Nama Lengkap..." required>
-                                    <span class="text-sm m-l text-red-500">{{ $errors->first('nama') }}</span>
+                                        placeholder="Masukan Nama Paket..." required>
+                                    <span class="text-sm m-l text-red-500">{{ $errors->first('nama_paket') }}</span>
                                 </label><br>
                                 <label for="">
                                     <span
-                                        class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Alamat</span>
-                                    <input type="text" id="alamat_outlet" name="alamat"
+                                        class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Harga</span>
+                                    <input type="number" name="harga" id="harga"
                                         onkeyup="this.value = this.value.toUpperCase()"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        placeholder="Masukan Alamat..." required>
-                                    <span class="text-sm m-l text-red-500">{{ $errors->first('alamat') }}</span>
-                                </label><br>
-                                <label for="">
-                                    <span
-                                        class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Telepon</span>
-                                    <input type="text" id="telp_outlet" name="telp"
-                                        onkeyup="this.value = this.value.toUpperCase()"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        placeholder="Masukan Telepon..." required>
-                                    <span class="text-sm m-l text-red-500">{{ $errors->first('telp') }}</span>
+                                        placeholder="Masukan Harga..." required>
+                                    <span class="text-sm m-l text-red-500">{{ $errors->first('harga') }}</span>
                                 </label><br>
                             </div>
                             <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
-                                <button type="submit" id="formSourceButtonOutlet"
+                                <button type="submit" id="formSourceButtonPaket"
                                     class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
                                 <button type="button" data-modal-target="sourceModal"
                                     onclick="changeSourceModal(this)"
@@ -640,6 +683,113 @@
                     });
             }
         }
+    </script>
+    {{-- END OUTLET --}}
+
+    {{-- START OUTLET --}}
+    <script>
+        $(document).ready(function() {
+            console.log('RUN!');
+            $('#paket-datatable').DataTable({
+                ajax: {
+                    url: 'api/paket',
+                    dataSrc: 'paket'
+                },
+                columns: [{
+                    data: 'no',
+                    render: (data, type, row, meta) => {
+                        return meta.row + 1;
+                    }
+                }, {
+                    data: 'id_outlet',
+                }, {
+                    data: 'jenis',
+                }, {
+                    data: 'nama_paket',
+                }, {
+                    data: 'harga',
+                }, {
+                    data: {
+                        no: 'no',
+                        name: 'name'
+                    },
+                    render: (data) => {
+                        let editUrl =
+                            `<button type="button" data-id="${data.id}"
+                                                        data-modal-target="sourceModal-paket" data-nama="${data.nama}" data-alamat="${data.alamat}" data-telp="${data.tlp}"
+                                                        onclick="editSourceModalPaket(this)"
+                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                                       <i class="fas fa-edit"></i>
+                                                    </button>`;
+                        let deleteUrl =
+                            `<button onclick="return memberDeletePaket('${data.id}','${data.nama}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white"><i class="fas fa-trash"></i></button>`;
+                        return `${editUrl} ${deleteUrl}`;
+                    }
+                }, ],
+            });
+        });
+
+        // const editSourceModalOutlet = (button) => {
+        //     const formModal = document.getElementById('formSourceModal-outlet');
+        //     const modalTarget = button.dataset.modalTarget;
+        //     const id = button.dataset.id;
+        //     const nama = button.dataset.nama;
+        //     const alamat = button.dataset.alamat;
+        //     const telp = button.dataset.telp;
+        //     let url = "{{ route('outlet.update', ':id') }}".replace(':id', id);
+        //     let status = document.getElementById(modalTarget);
+
+        //     document.getElementById('title_source_outlet').innerText = `Update Outlet ${nama}`;
+        //     document.getElementById('nama_outlet').value = nama;
+        //     document.getElementById('alamat_outlet').value = alamat;
+        //     document.getElementById('telp_outlet').value = telp;
+        //     document.getElementById('formSourceButtonOutlet').innerText = 'Simpan';
+        //     document.getElementById('formSourceModal-outlet').setAttribute('action', url);
+
+        //     let csrfToken = document.createElement('input');
+        //     csrfToken.setAttribute('type', 'hidden');
+        //     csrfToken.setAttribute('value', '{{ csrf_token() }}');
+        //     formModal.appendChild(csrfToken);
+
+        //     let methodInput = document.createElement('input');
+        //     methodInput.setAttribute('type', 'hidden');
+        //     methodInput.setAttribute('name', '_method');
+        //     methodInput.setAttribute('value', 'PATCH');
+        //     formModal.appendChild(methodInput);
+
+        //     status.classList.toggle('hidden');
+        // }
+
+        // const sourceModalCloseOutlet = (button) => {
+        //     const modalTarget = button.dataset.modalTarget;
+        //     let status = document.getElementById(modalTarget);
+
+        //     // Check if the element is found before accessing properties
+        //     if (status) {
+        //         status.classList.toggle('hidden');
+        //     } else {
+        //         console.error('Element not found with ID:', modalTarget);
+        //     }
+        // };
+
+        // const memberDeleteOutlet = async (id, nama) => {
+        //     let tanya = confirm(`Apakah anda yakin untuk menghapus ${nama} ?`);
+        //     if (tanya) {
+        //         await axios.post(`/outlet/${id}`, {
+        //                 '_method': 'DELETE',
+        //                 '_token': $('meta[name="csrf-token"]').attr('content')
+        //             })
+        //             .then(function(response) {
+        //                 // Handle success
+        //                 location.reload();
+        //             })
+        //             .catch(function(error) {
+        //                 // Handle error
+        //                 alert('Error deleting record');
+        //                 console.log(error);
+        //             });
+        //     }
+        // }
     </script>
     {{-- END OUTLET --}}
 </x-app-layout>

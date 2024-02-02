@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\MemberAPIController;
 use App\Http\Controllers\API\OutletAPIController;
+use App\Http\Controllers\API\PaketAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/member', [MemberAPIController::class, 'get_all'])->name('tb_member.get');
 Route::get('/outlet', [OutletAPIController::class, 'get_all'])->name('tb_outlet.get');
+Route::get('/paket', [PaketAPIController::class, 'get_all'])->name('tb_paket.get');
