@@ -96,7 +96,36 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate(
+            [
+                'nama' => 'required',
+                'alamat' => 'required',
+                'jenis_kelamin' => 'required',
+                'telp' => 'required',
+            ],
+            [
+                'nama.required' => 'Jurusan tidak boleh kosong',
+                'alamat.required' => 'Jurusan tidak boleh kosong',
+                'jenis_kelamin.required' => 'Jurusan tidak boleh kosong',
+                'telp.required' => 'Jurusan tidak boleh kosong',
+            ],
+        );
+
+        $data = [
+            'nama' => $request->input('nama'),
+            'alamat' => $request->input('alamat'),
+            'jenis_kelamin' => $request->input('jenis_kelamin'),
+            'telp' => $request->input('telp'),
+        ];
+
+        $member = Member::findOrFail($id);
+
+        if ($member) {
+            $member->update($data);
+            return back()->with('message_delete','Data Jurusan Sudah dihapus');
+        } else {
+            return back()->with('message_delete','Data Jurusan Sudah dihapus');
+        }
     }
 
     /**
@@ -107,6 +136,8 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $member = Member::findOrFail($id);
+        $member->delete();
+        return back()->with('message_delete','Data Member Sudah dihapus');
     }
 }

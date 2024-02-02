@@ -5,6 +5,7 @@
         </h2>
     </x-slot>
 
+    {{-- START MEMBER --}}
     <div class="py-12">
         <div class="flex">
             <div class="max-w-8xl w-1/2 mx-auto sm:px-6 lg:px-8">
@@ -27,7 +28,7 @@
                             <label for="">
                                 <span
                                     class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Alamat</span>
-                                    <input type="text" name="alamat" onkeyup="this.value = this.value.toUpperCase()"
+                                <input type="text" name="alamat" onkeyup="this.value = this.value.toUpperCase()"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     placeholder="Masukan Alamat..." required>
                                 <span class="text-sm m-l text-red-500">{{ $errors->first('alamat') }}</span>
@@ -47,7 +48,7 @@
                             <label for="">
                                 <span
                                     class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Telepon</span>
-                                    <input type="text" name="telp" onkeyup="this.value = this.value.toUpperCase()"
+                                <input type="text" name="telp" onkeyup="this.value = this.value.toUpperCase()"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     placeholder="Masukan Telepon..." required>
                                 <span class="text-sm m-l text-red-500">{{ $errors->first('telp') }}</span>
@@ -104,18 +105,51 @@
                         <form method="POST" action="{{ route('member.store') }}" id="formSourceModal">
                             @csrf
                             <div class="p-4 space-y-6">
-                                <div>
-                                    <label for="text"
-                                        class="block mb-2 text-sm font-medium text-gray-900">Jurusan</label>
-                                    <input type="text" id="major" name="major"
-                                        class="px-3 py-2 border shadow rounded w-full block text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer hover:shadow-lg"
-                                        id="" placeholder="Masukan Jurusan...">
-                                </div>
+                                <label for="">
+                                    <span
+                                        class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Nama
+                                        Lengkap</span>
+                                    <input type="text" id="nama" name="nama"
+                                        onkeyup="this.value = this.value.toUpperCase()"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        placeholder="Masukan Nama Lengkap..." required>
+                                    <span class="text-sm m-l text-red-500">{{ $errors->first('nama') }}</span>
+                                </label><br>
+                                <label for="">
+                                    <span
+                                        class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Alamat</span>
+                                    <input type="text" id="alamat" name="alamat"
+                                        onkeyup="this.value = this.value.toUpperCase()"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        placeholder="Masukan Alamat..." required>
+                                    <span class="text-sm m-l text-red-500">{{ $errors->first('alamat') }}</span>
+                                </label><br>
+                                <label for="">
+                                    <span
+                                        class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Jenis
+                                        Kelamin</span>
+                                    <select class="js-example-basic-single js-states form-control  m-6 border" style="width: 100%!important"
+                                        name="jenis_kelamin" data-placeholder="Pilih Jenis Kelamin" id="jenis_kelamin">
+                                        <option value="">Pilih...</option>
+                                        <option value="L">Laki-laki</option>
+                                        <option value="P">Perempuan</option>
+                                    </select><br>
+                                    <span class="text-sm m-l text-red-500">{{ $errors->first('jenis_kelamin') }}</span>
+                                </label><br>
+                                <label for="">
+                                    <span
+                                        class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Telepon</span>
+                                    <input type="text" id="telp" name="telp" onkeyup="this.value = this.value.toUpperCase()"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        placeholder="Masukan Telepon..." required>
+                                    <span class="text-sm m-l text-red-500">{{ $errors->first('telp') }}</span>
+                                </label><br>
                             </div>
                             <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
                                 <button type="submit" id="formSourceButton"
                                     class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
-                                <button type="button" data-modal-target="sourceModal" onclick="changeSourceModal(this)"
+                                <button type="button" data-modal-target="sourceModal"
+                                    onclick="changeSourceModal(this)"
                                     class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
                             </div>
                         </form>
@@ -124,6 +158,9 @@
             </div>
         </div>
     </div>
+    {{-- END MEMBER --}}
+
+    {{-- START MEMBER --}}
     <script>
         $(document).ready(function() {
             console.log('RUN!');
@@ -141,9 +178,9 @@
                     data: 'nama',
                 }, {
                     data: 'alamat',
-                },{
+                }, {
                     data: 'jenis_kelamin',
-                },{
+                }, {
                     data: 'telp',
                 }, {
                     data: {
@@ -153,13 +190,13 @@
                     render: (data) => {
                         let editUrl =
                             `<button type="button" data-id="${data.id}"
-                                                        data-modal-target="sourceModal" data-id_major="${data.id_major}" data-class_name="${data.class_name}"
+                                                        data-modal-target="sourceModal" data-nama="${data.nama}" data-alamat="${data.alamat}" data-jenis_kelamin="${data.jenis_kelamin}" data-telp="${data.telp}"
                                                         onclick="editSourceModal(this)"
                                                         class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
                                                        <i class="fas fa-edit"></i>
                                                     </button>`;
                         let deleteUrl =
-                            `<button onclick="return classesDelete('${data.id}','${data.nama}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white"><i class="fas fa-trash"></i></button>`;
+                            `<button onclick="return memberDelete('${data.id}','${data.nama}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white"><i class="fas fa-trash"></i></button>`;
                         return `${editUrl} ${deleteUrl}`;
                     }
                 }, ],
@@ -170,13 +207,30 @@
             const formModal = document.getElementById('formSourceModal');
             const modalTarget = button.dataset.modalTarget;
             const id = button.dataset.id;
-            const major = button.dataset.major;
+            const nama = button.dataset.nama;
+            const alamat = button.dataset.alamat;
+            const jenis_kelamin = button.dataset.jenis_kelamin;
+            const telp = button.dataset.telp;
             let url = "{{ route('member.update', ':id') }}".replace(':id', id);
             let status = document.getElementById(modalTarget);
-            document.getElementById('title_source').innerText = `Update Jurusan ${major}`;
-            document.getElementById('major').value = major;
+
+            document.getElementById('title_source').innerText = `Update Member ${nama}`;
+            document.getElementById('nama').value = nama;
+            document.getElementById('alamat').value = alamat;
+
+            // Definisi variabel selectElement
+            const selectElement = $('#jenis_kelamin');
+
+            // Set nilai Select2 dan memicu perubahan
+            selectElement.val(jenis_kelamin).trigger('change');
+
+            // Log nilai selectElement untuk debug
+            console.log(selectElement.val());
+
+            document.getElementById('telp').value = telp;
             document.getElementById('formSourceButton').innerText = 'Simpan';
             document.getElementById('formSourceModal').setAttribute('action', url);
+
             let csrfToken = document.createElement('input');
             csrfToken.setAttribute('type', 'hidden');
             csrfToken.setAttribute('value', '{{ csrf_token() }}');
@@ -197,10 +251,10 @@
             status.classList.toggle('hidden');
         }
 
-        const majorDelete = async (id, major) => {
-            let tanya = confirm(`Apakah anda yakin untuk menghapus jurusan ${major} ?`);
+        const memberDelete = async (id, nama) => {
+            let tanya = confirm(`Apakah anda yakin untuk menghapus ${nama} ?`);
             if (tanya) {
-                await axios.post(`/major/${id}`, {
+                await axios.post(`/member/${id}`, {
                         '_method': 'DELETE',
                         '_token': $('meta[name="csrf-token"]').attr('content')
                     })
@@ -216,4 +270,5 @@
             }
         }
     </script>
+    {{-- END MEMBER --}}
 </x-app-layout>
