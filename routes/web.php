@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MasterController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\PaketController;
@@ -25,9 +26,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/master', function () {
-    return view('master/index');
-})->middleware(['auth', 'verified'])->name('master');
+Route::resource('master', MasterController::class)->middleware(['auth', 'verified']);
 
 Route::resource('member', MemberController::class)->middleware(['auth']);
 Route::resource('outlet', OutletController::class)->middleware(['auth']);

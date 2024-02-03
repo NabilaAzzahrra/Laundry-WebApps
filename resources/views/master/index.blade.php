@@ -729,36 +729,56 @@
             });
         });
 
-        // const editSourceModalOutlet = (button) => {
-        //     const formModal = document.getElementById('formSourceModal-outlet');
-        //     const modalTarget = button.dataset.modalTarget;
-        //     const id = button.dataset.id;
-        //     const nama = button.dataset.nama;
-        //     const alamat = button.dataset.alamat;
-        //     const telp = button.dataset.telp;
-        //     let url = "{{ route('outlet.update', ':id') }}".replace(':id', id);
-        //     let status = document.getElementById(modalTarget);
+        const editSourceModalPaket = (button) => {
+            const formModal = document.getElementById('formSourceModal-paket');
+            const modalTarget = button.dataset.modalTarget;
+            const id = button.dataset.id;
+            const id_outlet = button.dataset.id_outlet; // Fix: use idOutlet instead of id_outlet
+            const jenis = button.dataset.jenis;
+            const nama_paket = button.dataset.nama_paket; // Fix: use namaPaket instead of nama_paket
+            const harga = button.dataset.harga;
+            let url = "{{ route('paket.update', ':id') }}".replace(':id', id);
+            let status = document.getElementById(modalTarget);
 
-        //     document.getElementById('title_source_outlet').innerText = `Update Outlet ${nama}`;
-        //     document.getElementById('nama_outlet').value = nama;
-        //     document.getElementById('alamat_outlet').value = alamat;
-        //     document.getElementById('telp_outlet').value = telp;
-        //     document.getElementById('formSourceButtonOutlet').innerText = 'Simpan';
-        //     document.getElementById('formSourceModal-outlet').setAttribute('action', url);
+            document.getElementById('title_source_paket').innerText = `Update Paket ${nama_paket}`;
+            document.querySelector('[name="id_outlet"]').value = id_outlet;
+            let event = new Event('change');
+            document.querySelector('[name="id_outlet"]').dispatchEvent(event);
 
-        //     let csrfToken = document.createElement('input');
-        //     csrfToken.setAttribute('type', 'hidden');
-        //     csrfToken.setAttribute('value', '{{ csrf_token() }}');
-        //     formModal.appendChild(csrfToken);
+            // Definisi variabel selectElement
+            const selectElement = $('#jenis');
 
-        //     let methodInput = document.createElement('input');
-        //     methodInput.setAttribute('type', 'hidden');
-        //     methodInput.setAttribute('name', '_method');
-        //     methodInput.setAttribute('value', 'PATCH');
-        //     formModal.appendChild(methodInput);
+            // Set nilai Select2 dan memicu perubahan
+            selectElement.val(jenis).trigger('change');
 
-        //     status.classList.toggle('hidden');
-        // }
+            // Log nilai selectElement untuk debug
+            console.log(selectElement.val());
+
+            document.getElementById('nama_paket').value = nama_paket;
+            document.getElementById('harga').value = harga;
+            document.getElementById('formSourceButtonPaket').innerText = 'Simpan';
+            document.getElementById('formSourceModal-paket').setAttribute('action', url);
+
+            // Remove existing CSRF token and method input
+            document.querySelectorAll('[name="_token"]').forEach(el => el.remove());
+            document.querySelectorAll('[name="_method"]').forEach(el => el.remove());
+
+            // Add new CSRF token and method input
+            let csrfToken = document.createElement('input');
+            csrfToken.setAttribute('type', 'hidden');
+            csrfToken.setAttribute('name', '_token');
+            csrfToken.setAttribute('value', '{{ csrf_token() }}');
+            formModal.appendChild(csrfToken);
+
+            let methodInput = document.createElement('input');
+            methodInput.setAttribute('type', 'hidden');
+            methodInput.setAttribute('name', '_method');
+            methodInput.setAttribute('value', 'PATCH');
+            formModal.appendChild(methodInput);
+
+            status.classList.toggle('hidden');
+        }
+
 
         // const sourceModalCloseOutlet = (button) => {
         //     const modalTarget = button.dataset.modalTarget;
