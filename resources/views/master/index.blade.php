@@ -409,11 +409,11 @@
                                         class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Outlet
                                     </span>
                                     <select class="js-example-basic-single js-states form-control  m-6 border"
-                                        style="width: 100%!important" name="id_outlet"
-                                        data-placeholder="Pilih Outlet" id="id_outlet">
+                                        style="width: 100%!important" id="id_outlet" name="id_outlet"
+                                        data-placeholder="Pilih Outlet" >
                                         <option value="">Pilih...</option>
                                         @foreach ($outlet as $o)
-                                            <option value="{{ $o->id }}">{{ $o->nama }}</option>
+                                            <option value="{{ $o->id }}" id="option{{ $o->id }}">{{ $o->nama }}</option>
                                         @endforeach
                                     </select><br>
                                     <span class="text-sm m-l text-red-500">{{ $errors->first('id_outlet') }}</span>
@@ -686,7 +686,7 @@
     </script>
     {{-- END OUTLET --}}
 
-    {{-- START OUTLET --}}
+    {{-- START PAKET --}}
     <script>
         $(document).ready(function() {
             console.log('RUN!');
@@ -701,7 +701,10 @@
                         return meta.row + 1;
                     }
                 }, {
-                    data: 'id_outlet',
+                    data: 'outlet',
+                    render: (data, type, row) => {
+                        return data.nama;
+                    }
                 }, {
                     data: 'jenis',
                 }, {
@@ -716,7 +719,7 @@
                     render: (data) => {
                         let editUrl =
                             `<button type="button" data-id="${data.id}"
-                                                        data-modal-target="sourceModal-paket" data-nama="${data.nama}" data-alamat="${data.alamat}" data-telp="${data.tlp}"
+                                                        data-modal-target="sourceModal-paket" data-id_outlet="${data.id_outlet}" data-jenis="${data.jenis}" data-nama_paket="${data.nama_paket}" data-harga="${data.harga}"
                                                         onclick="editSourceModalPaket(this)"
                                                         class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
                                                        <i class="fas fa-edit"></i>
@@ -741,19 +744,13 @@
             let status = document.getElementById(modalTarget);
 
             document.getElementById('title_source_paket').innerText = `Update Paket ${nama_paket}`;
-            document.querySelector('[name="id_outlet"]').value = id_outlet;
-            let event = new Event('change');
-            document.querySelector('[name="id_outlet"]').dispatchEvent(event);
-
-            // Definisi variabel selectElement
-            const selectElement = $('#jenis');
-
-            // Set nilai Select2 dan memicu perubahan
-            selectElement.val(jenis).trigger('change');
-
-            // Log nilai selectElement untuk debug
-            console.log(selectElement.val());
-
+            
+            document.getElementById('id_outlet').value = id_outlet;
+            $('#id_outlet').select2(); 
+            
+            document.getElementById('jenis').value = jenis;
+            $('#jenis').select2(); 
+            
             document.getElementById('nama_paket').value = nama_paket;
             document.getElementById('harga').value = harga;
             document.getElementById('formSourceButtonPaket').innerText = 'Simpan';
@@ -780,36 +777,36 @@
         }
 
 
-        // const sourceModalCloseOutlet = (button) => {
-        //     const modalTarget = button.dataset.modalTarget;
-        //     let status = document.getElementById(modalTarget);
+        const sourceModalClosePaket = (button) => {
+            const modalTarget = button.dataset.modalTarget;
+            let status = document.getElementById(modalTarget);
 
-        //     // Check if the element is found before accessing properties
-        //     if (status) {
-        //         status.classList.toggle('hidden');
-        //     } else {
-        //         console.error('Element not found with ID:', modalTarget);
-        //     }
-        // };
+            // Check if the element is found before accessing properties
+            if (status) {
+                status.classList.toggle('hidden');
+            } else {
+                console.error('Element not found with ID:', modalTarget);
+            }
+        };
 
-        // const memberDeleteOutlet = async (id, nama) => {
-        //     let tanya = confirm(`Apakah anda yakin untuk menghapus ${nama} ?`);
-        //     if (tanya) {
-        //         await axios.post(`/outlet/${id}`, {
-        //                 '_method': 'DELETE',
-        //                 '_token': $('meta[name="csrf-token"]').attr('content')
-        //             })
-        //             .then(function(response) {
-        //                 // Handle success
-        //                 location.reload();
-        //             })
-        //             .catch(function(error) {
-        //                 // Handle error
-        //                 alert('Error deleting record');
-        //                 console.log(error);
-        //             });
-        //     }
-        // }
+        const memberDeletePaket = async (id, nama) => {
+            let tanya = confirm(`Apakah anda yakin untuk menghapus ${nama} ?`);
+            if (tanya) {
+                await axios.post(`/paket/${id}`, {
+                        '_method': 'DELETE',
+                        '_token': $('meta[name="csrf-token"]').attr('content')
+                    })
+                    .then(function(response) {
+                        // Handle success
+                        location.reload();
+                    })
+                    .catch(function(error) {
+                        // Handle error
+                        alert('Error deleting record');
+                        console.log(error);
+                    });
+            }
+        }
     </script>
-    {{-- END OUTLET --}}
+    {{-- END PAKET --}}
 </x-app-layout>

@@ -17,4 +17,9 @@ class Paket extends Model
     ];
 
     protected $table = 'tb_paket';
+
+    public function outlet()
+    {
+        return $this->belongsTo(Outlet::class, 'id_outlet', 'id');
+    }
 }

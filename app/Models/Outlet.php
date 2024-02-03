@@ -16,4 +16,8 @@ class Outlet extends Model
     ];
 
     protected $table = 'tb_outlet';
+
+    public function paket(){
+        return $this->hasMany(Paket::class, 'id_outlet');
+    }
 }

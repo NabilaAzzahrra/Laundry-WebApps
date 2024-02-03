@@ -10,7 +10,7 @@ class PaketAPIController extends Controller
 {
     public function get_all()
     {
-        $paket = Paket::all();
+        $paket = Paket::with(['outlet'])->get();
         return response()->json([
             'paket'=>$paket,
         ]);
