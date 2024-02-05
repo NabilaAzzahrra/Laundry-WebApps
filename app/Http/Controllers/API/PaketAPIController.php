@@ -15,4 +15,10 @@ class PaketAPIController extends Controller
             'paket'=>$paket,
         ]);
     }
+
+    public function get_jenis($jenis)
+    {
+        $paket = Paket::where('jenis', $jenis)->first();
+        return response()->json($paket);
+    }
 }

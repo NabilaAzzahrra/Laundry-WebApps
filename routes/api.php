@@ -24,3 +24,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/member', [MemberAPIController::class, 'get_all'])->name('tb_member.get');
 Route::get('/outlet', [OutletAPIController::class, 'get_all'])->name('tb_outlet.get');
 Route::get('/paket', [PaketAPIController::class, 'get_all'])->name('tb_paket.get');
+Route::get('/paket/jenis/{jenis}', [PaketAPIController::class, 'get_jenis'])->name('tb_paket.get_jenis');
