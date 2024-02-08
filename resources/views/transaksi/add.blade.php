@@ -84,6 +84,16 @@
                                     <span class="text-sm m-l text-red-500">{{ $errors->first('tgl_bayar') }}</span>
                                 </label><br>
                             </div>
+                            <div class="w-full">
+                                <label for="">
+                                    <span
+                                        class="block font-semibold mb-1 text-slate-700 after:text-pink-500 after:ml-0.5 dark:text-white">Diskon</span>
+                                    <input type="number" name="diskon" id="diskonInput"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        placeholder="Masukan Diskon...">
+                                </label><br>
+                            </div>
+
                         </div>
 
 
@@ -168,6 +178,43 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="grid grid-cols-1 gap-4 my-4" id="hasil">
+                                    <div class="flex gap-4">
+                                        <div class="w-full">
+                                            <label for="">
+                                                <span
+                                                    class="block font-semibold mb-1 text-slate-700  after:text-pink-500 after:ml-0.5 dark:text-white"></span>
+                                            </label><br>
+                                        </div>
+                                        <div class="w-full">
+                                            <label for="">
+                                                <span
+                                                    class="block font-semibold mb-1 text-slate-700 after:text-pink-500 after:ml-0.5 dark:text-white"></span>
+                                            </label><br>
+                                        </div>
+                                        <div class="w-full">
+                                            <label for="">
+                                                <span
+                                                    class="block font-semibold mb-1 text-slate-700 after:text-pink-500 after:ml-0.5 dark:text-white"></span>
+                                            </label><br>
+                                        </div>
+                                        <div class="w-full">
+                                            <label for="">
+                                                <span
+                                                    class="block text-right font-semibold mb-1 mt-2 text-slate-700 after:text-pink-500 after:ml-0.5 dark:text-white">Total
+                                                    Harga</span>
+                                            </label><br>
+                                        </div>
+                                        <div class="w-full">
+                                            <label for="">
+                                                <input type="number" name="total_harga" id="total_harga"
+                                                    onkeyup="this.value = this.value.toUpperCase()"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                    placeholder="Masukan Total Harga..." required readonly>
+                                            </label><br>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -177,32 +224,34 @@
                                     <span
                                         class="block font-semibold mb-1 text-slate-700 after:text-pink-500 after:ml-0.5 dark:text-white">Biaya
                                         Tambahan</span>
-                                    <input type="number" name="biaya_tambahan"
+                                    <input type="number" name="biaya_tambahan" id="biayaTambahan"
                                         onkeyup="this.value = this.value.toUpperCase()"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        placeholder="Masukan Biaya Tambahar...">
-                                </label><br>
-                            </div>
-                            <div class="w-full">
-                                <label for="">
-                                    <span
-                                        class="block font-semibold mb-1 text-slate-700 after:text-pink-500 after:ml-0.5 dark:text-white">Diskon</span>
-                                    <input type="number" name="diskon"
-                                        onkeyup="this.value = this.value.toUpperCase()"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        placeholder="Masukan Diskon...">
+                                        placeholder="Masukan Biaya Tambahan...">
                                 </label><br>
                             </div>
                             <div class="w-full">
                                 <label for="">
                                     <span
                                         class="block font-semibold mb-1 text-slate-700 after:text-pink-500 after:ml-0.5 dark:text-white">Pajak</span>
-                                    <input type="number" name="pajak"
+                                    <input type="number" name="pajak" value="0.0075" id="pajakInput"
                                         onkeyup="this.value = this.value.toUpperCase()"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         placeholder="Masukan Pajak..." readonly>
                                 </label><br>
                             </div>
+                        </div>
+
+                        <div class="w-full">
+                            <label for="">
+                                <span
+                                    class="block font-semibold mb-1 text-slate-700 after:text-pink-500 after:ml-0.5 dark:text-white">TOTAL
+                                    BAYAR</span>
+                                <input type="number" name="total_bayar" id="total_bayar"
+                                    onkeyup="this.value = this.value.toUpperCase()"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    placeholder="Masukan Pajak..." readonly>
+                            </label><br>
                         </div>
 
                         <div class="pt-2">
@@ -251,14 +300,40 @@
             const qty = document.querySelectorAll('[name="qty[]"]');
             const harga = document.querySelectorAll('[name="harga[]"]');
             const total = document.querySelectorAll('[name="total[]"]');
+            var biayaTambahanInput = document.getElementById("biayaTambahan");
+            var totalBayarInput = document.getElementById("total_bayar");
+            var jumlahDiskonInput = document.getElementById("diskonInput");
 
-            paket.forEach(async (paketElement, index) => {
-                let hargaVal = harga[index].value;
-                let qtyVal = qty[index].value;
+            console.log("Nilai dari jumlahDiskonInput:", jumlahDiskonInput);
+
+
+            console.log("Nilai diskonInput:", jumlahDiskonInput.value);
+
+
+            var jumlahDiskon = parseInt(jumlahDiskonInput.value) || 0;
+            console.log("Nilai diskon yang diuraikan:", jumlahDiskon);
+
+            let total_harga = 0;
+            paket.forEach((paketElement, index) => {
+                let hargaVal = parseFloat(harga[index].value);
+                let qtyVal = parseFloat(qty[index].value);
                 total[index].value = hargaVal * qtyVal;
+                total_harga += parseInt(total[index].value);
             });
-        }
 
+            biayaTambahanInput.addEventListener("keyup", function() {
+                var biayaTambahan = parseFloat(biayaTambahanInput.value) || 0;
+                var totalHargaTambahan = total_harga + biayaTambahan;
+                var totalPajak = totalHargaTambahan * 0.0075;
+                var totalHargaTambahanPajak = totalHargaTambahan + totalPajak;
+                var totalHargaDiskon = totalHargaTambahanPajak - (totalHargaTambahanPajak * jumlahDiskon / 100);
+                totalBayarInput.value = totalHargaDiskon.toFixed(2);
+            });
+
+
+            document.getElementById('total_harga').value = total_harga;
+            document.getElementById('total_bayar').value = totalBayarInput.value;
+        }
 
         function tambahForm() {
             const element = `
@@ -328,6 +403,11 @@
             form.innerHTML = element;
             document.getElementById('hasil').appendChild(form);
             $('.js-example-basic-single').select2();
+        }
+
+        function hapusForm() {
+            const list = document.getElementById('hasil');
+            list.removeChild(list.lastElementChild);
         }
     </script>
 </x-app-layout>
