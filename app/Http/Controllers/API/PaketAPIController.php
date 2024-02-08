@@ -18,7 +18,7 @@ class PaketAPIController extends Controller
 
     public function get_jenis($jenis)
     {
-        $paket = Paket::where('jenis', $jenis)->first();
+        $paket = Paket::where('id', $jenis)->first();
         return response()->json($paket);
     }
 }

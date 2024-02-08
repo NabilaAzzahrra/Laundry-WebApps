@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Detail;
 use App\Models\Member;
 use App\Models\Outlet;
 use App\Models\Paket;
@@ -81,11 +82,40 @@ class TransaksiController extends Controller
             'id_user' => Auth::user()->id,
         ];
 
-        Transaksi::create($outlet);
+        $details = [];
 
-        return redirect()
-            ->route('transaksi.index')
-            ->with('message', 'Data Transaksi Sudah ditambahkan');
+        // Mendapatkan input dari request
+        $id_paket = $request->input('id_paket');
+        $qtys = $request->input('qty');
+        $keterangans = $request->input('keterangan');
+
+        // Mendapatkan jumlah elemen untuk melakukan iterasi
+        $count = count($id_paket);
+
+        // Memasukkan setiap detail ke dalam array
+        for ($i = 0; $i < $count; $i++) {
+            $details[] = [
+                'id_transaksi' => date('YmdHis'),
+                'id_paket' => $id_paket[$i],
+                'qty' => $qtys[$i],
+                'keterangan' => $keterangans[$i],
+            ];
+        }
+
+        // Melakukan insert batch
+        Detail::insert($details);
+
+        // $detail = [
+        //     'id_transaksi' => date('YmdHis'),
+        //     'id_paket' => $request->input('id_paket'),
+        //     'qty' => $request->input('qty'),
+        //     'keterangan' => $request->input('keterangan'),
+        // ];
+
+        Transaksi::create($outlet);
+        // Detail::create($detail);
+
+        return redirect()->route('transaksi.index')->with('message', 'Data Transaksi Sudah ditambahkan');
     }
 
     /**

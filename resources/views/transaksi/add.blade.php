@@ -125,7 +125,7 @@
                                                     data-placeholder="Pilih Paket" onchange="return getpaket()">
                                                     <option value="">Pilih...</option>
                                                     @foreach ($paket as $p)
-                                                        <option value="{{ $p->jenis }}">
+                                                        <option value="{{ $p->id}}">
                                                             {{ $p->nama_paket }}
                                                         </option>
                                                     @endforeach
@@ -167,6 +167,16 @@
                                         <div class="w-full">
                                             <label for="">
                                                 <span
+                                                    class="block font-semibold mb-1 text-slate-700 after:text-pink-500 after:ml-0.5 dark:text-white">Keterangan</span>
+                                                <input type="text" id="keterangan" name="keterangan[]"
+                                                    onkeyup="updateTotal()"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                    placeholder="Masukan Keterangan...">
+                                            </label><br>
+                                        </div>
+                                        <div class="w-full">
+                                            <label for="">
+                                                <span
                                                     class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Jumlah</span>
                                                 <input type="number" name="total[]" id="total"
                                                     onkeyup="this.value = this.value.toUpperCase()"
@@ -184,6 +194,12 @@
                                             <label for="">
                                                 <span
                                                     class="block font-semibold mb-1 text-slate-700  after:text-pink-500 after:ml-0.5 dark:text-white"></span>
+                                            </label><br>
+                                        </div>
+                                        <div class="w-full">
+                                            <label for="">
+                                                <span
+                                                    class="block font-semibold mb-1 text-slate-700 after:text-pink-500 after:ml-0.5 dark:text-white"></span>
                                             </label><br>
                                         </div>
                                         <div class="w-full">
@@ -347,7 +363,7 @@
                                                 data-placeholder="Pilih Paket" onchange="return getpaket()">
                                                 <option value="">Pilih...</option>
                                                 @foreach ($paket as $p)
-                                                    <option value="{{ $p->jenis }}">
+                                                    <option value="{{ $p->id }}">
                                                         {{ $p->nama_paket }}
                                                     </option>
                                                 @endforeach
@@ -388,6 +404,16 @@
                                     <div class="w-full">
                                             <label for="">
                                                 <span
+                                                    class="block font-semibold mb-1 text-slate-700 after:text-pink-500 after:ml-0.5 dark:text-white">Keterangan</span>
+                                                <input type="text" name="keterangan[]"
+                                                    onkeyup="updateTotal()"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                    placeholder="Masukan Keterangan...">
+                                            </label><br>
+                                        </div>
+                                    <div class="w-full">
+                                            <label for="">
+                                                <span
                                                     class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-pink-500 after:ml-0.5 dark:text-white">Jumlah</span>
                                                 <input type="number" name="total[]" id="total"
                                                     onkeyup="this.value = this.value.toUpperCase()"
@@ -397,7 +423,9 @@
                                                     class="text-sm m-l text-red-500">{{ $errors->first('jumlah') }}</span>
                                             </label><br>
                                         </div>
+                                        
                                 </div>
+                                
 		`;
             const form = document.createElement("div");
             form.innerHTML = element;
