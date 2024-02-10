@@ -44,6 +44,13 @@ class TransaksiController extends Controller
         ]);
     }
 
+    public function pricelist()
+    {
+        return view('transaksi.index')->with([
+        ]);
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -126,7 +133,10 @@ class TransaksiController extends Controller
      */
     public function show($id)
     {
-        //
+        $transaksi = Transaksi::where('id', $id)->first();
+        return view('transaksi.read')->with([
+            'transaksi' => $transaksi
+        ]);
     }
 
     /**
@@ -137,7 +147,10 @@ class TransaksiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $transaksi = Transaksi::where('id', $id)->first();
+        return view('transaksi.read')->with([
+            'transaksi' => $transaksi
+        ]);
     }
 
     /**
@@ -169,4 +182,5 @@ class TransaksiController extends Controller
 
         return response()->json(['paket' => $paket]);
     }
+
 }

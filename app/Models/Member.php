@@ -17,4 +17,8 @@ class Member extends Model
     ];
 
     protected $table = 'tb_member';
+
+    public function transaksi(){
+        return $this->hasMany(Transaksi::class, 'id_member');
+    }
 }

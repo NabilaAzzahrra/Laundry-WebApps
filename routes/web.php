@@ -29,7 +29,6 @@ Route::get('/dashboard', function () {
 
 Route::resource('master', MasterController::class)->middleware(['auth', 'verified']);
 Route::resource('transaksi', TransaksiController::class)->middleware(['auth', 'verified']);
-
 Route::resource('member', MemberController::class)->middleware(['auth']);
 Route::resource('outlet', OutletController::class)->middleware(['auth']);
 Route::resource('paket', PaketController::class)->middleware(['auth']);
