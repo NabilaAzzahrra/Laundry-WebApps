@@ -65,14 +65,12 @@ class TransaksiController extends Controller
                 'id_member' => 'required',
                 'tanggal' => 'required',
                 'batas_waktu' => 'required',
-                'tgl_bayar' => 'required',
             ],
             [
                 'id_outlet.required' => 'Jurusan tidak boleh kosong',
                 'id_member.required' => 'Jurusan tidak boleh kosong',
                 'tanggal.required' => 'Jurusan tidak boleh kosong',
                 'batas_waktu.required' => 'Jurusan tidak boleh kosong',
-                'tgl_bayar.required' => 'Jurusan tidak boleh kosong',
             ],
         );
 
@@ -162,7 +160,18 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'dibayar' => 'lunas',
+        ];
+
+        $transaksi = Transaksi::findOrFail($id);
+
+        if ($transaksi) {
+            $transaksi->update($data);
+            return back()->with('message_delete','Transaksi berhasil dibayar');
+        } else {
+            return back()->with('message_delete','Transaksi tidak berhasil dibayar');
+        }
     }
 
     /**
@@ -181,6 +190,62 @@ class TransaksiController extends Controller
         $paket = Paket::where('id', $id)->first();
 
         return response()->json(['paket' => $paket]);
+    }
+
+    public function print($id)
+    {
+        $transaksi = Transaksi::where('id', $id)->first();
+        return view('transaksi.print')->with([
+            'transaksi' => $transaksi
+        ]);
+    }
+
+    public function proses($id)
+    {
+        $data = [
+            'status' => 'proses',
+        ];
+
+        $transaksi = Transaksi::findOrFail($id);
+
+        if ($transaksi) {
+            $transaksi->update($data);
+            return back()->with('message_delete','Laundry sedang diproses');
+        } else {
+            return back()->with('message_delete','Laundry Gagal diproses');
+        }
+    }
+
+    public function selesai($id)
+    {
+        $data = [
+            'status' => 'selesai',
+        ];
+
+        $transaksi = Transaksi::findOrFail($id);
+
+        if ($transaksi) {
+            $transaksi->update($data);
+            return back()->with('message_delete','Laundry sudah diproses');
+        } else {
+            return back()->with('message_delete','Laundry Gagal diproses');
+        }
+    }
+
+    public function diambil($id)
+    {
+        $data = [
+            'status' => 'diambil',
+        ];
+
+        $transaksi = Transaksi::findOrFail($id);
+
+        if ($transaksi) {
+            $transaksi->update($data);
+            return back()->with('message_delete','Laundry sudah diambil');
+        } else {
+            return back()->with('message_delete','Laundry Gagal diproses');
+        }
     }
 
 }

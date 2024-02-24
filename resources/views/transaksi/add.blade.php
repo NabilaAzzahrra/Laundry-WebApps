@@ -80,8 +80,7 @@
                                     <input type="date" name="tgl_bayar"
                                         onkeyup="this.value = this.value.toUpperCase()"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        placeholder="Masukan Tanggal Bayar..." required>
-                                    <span class="text-sm m-l text-red-500">{{ $errors->first('tgl_bayar') }}</span>
+                                        placeholder="Masukan Tanggal Bayar...">
                                 </label><br>
                             </div>
                             <div class="w-full">
@@ -342,10 +341,12 @@
                 var totalHargaTambahan = total_harga + biayaTambahan;
                 var totalPajak = totalHargaTambahan * 0.0075;
                 var totalHargaTambahanPajak = totalHargaTambahan + totalPajak;
-                var totalHargaDiskon = totalHargaTambahanPajak - (totalHargaTambahanPajak * jumlahDiskon / 100);
+                var diskon = jumlahDiskon / 100;
+                var totaldiskon = totalHargaTambahanPajak*diskon;
+                var jumlahdiskon = totalHargaTambahanPajak-totaldiskon;
+                var totalHargaDiskon = jumlahdiskon;
                 totalBayarInput.value = totalHargaDiskon.toFixed(2);
             });
-
 
             document.getElementById('total_harga').value = total_harga;
             document.getElementById('total_bayar').value = totalBayarInput.value;
